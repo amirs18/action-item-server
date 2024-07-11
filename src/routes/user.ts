@@ -37,3 +37,16 @@ router.delete("/:userEmail", async (req, res) => {
   //TODO error handling
   res.sendStatus(200);
 });
+router.patch("/:userEmail", async (req, res) => {
+  const userEmail = req.params.userEmail;
+  const user = req.body.body;
+
+  await db
+    .updateTable("user")
+    .set(user)
+    .where("email", "=", userEmail)
+    .executeTakeFirst();
+
+  //TODO error handling
+  res.sendStatus(200);
+});
