@@ -24,9 +24,16 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-  const user: User = req.body;
+  const user: User = req.body.body;
 
   await db.insertInto("user").values(user).executeTakeFirst();
+  //   TODO error handling
+  res.sendStatus(200);
+});
+router.delete("/:userEmail", async (req, res) => {
+  const userEmail = req.params.userEmail;
+  await db.deleteFrom("user").where("email", "=", userEmail).executeTakeFirst();
+
   //TODO error handling
   res.sendStatus(200);
 });
