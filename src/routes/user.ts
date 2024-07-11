@@ -39,11 +39,12 @@ router.delete("/:userEmail", async (req, res) => {
 });
 router.patch("/:userEmail", async (req, res) => {
   const userEmail = req.params.userEmail;
-  const user = req.body.body;
+  const name: User["name"] = req.body;
+  console.log("🚀 ~ router.patch ~ name:", name);
 
   await db
     .updateTable("user")
-    .set(user)
+    .set({ name: name })
     .where("email", "=", userEmail)
     .executeTakeFirst();
 
